@@ -1,57 +1,72 @@
-<!-- togglePassword -->
-<!DOCTYPE html>
-<html lang="en">
-
+<!doctype html>
+<html lang="lt">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="HTML, CSS">
+    <meta name="description" content="Naujienų portalo registracija">
+    <meta name="author" content="vydas">
     <title>Registracija</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
-    <link rel="stylesheet" href="css/style.css" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="stiliaus.css" rel="stylesheet">
+    <link href="reg.css" rel="stylesheet">
 </head>
 
-<body>
-    <div class="container">
-        <h3>Registracija</h3>
+<body class="text-center">
+    <main class="register w-100 m-auto">
         <form method="post">
-            <p>
-                <label for="username">Vardas:</label>
-                <input type="text" name="username" id="username">
-            </p>
-            <p>
-                <label for="password">Slaptažodis:</label>
-                <input type="password" name="password" id="password" />
-                <i class="bi bi-eye-slash" id="togglePassword"></i>
-            </p>
-            <p>
-                <label for="password">Pakartoti slaptažodį:</label>
-                <input type="password" name="password" id="password" />
-             <!-- <i class="bi bi-eye-slash" id="togglePassword"></i> -->
-            </p>
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-end ">
-                       <button class="btn btn-dark btn-sm me-md-2" id="" type="button" onclick="location.href='reg_sekminga.html';">registruotis</button>
-                    </div>
+            <img class="mb-4" src="../news_logo_transp.png" alt="Naujienų portalas" width="120" height="50">
+            <h3 class="h3 mb-3 fw-normal"><b>Registracija</b></h3>
+
+            <div class="form-floating">
+                <input type="text" class="form-control" id="username" name="username" placeholder="Vardas" required>
+                <label for="username">Vardas</label>
+            </div>
+
+            <div class="form-floating password-field">
+                <input type="password" class="form-control" id="password" name="password" placeholder="Slaptažodis" required>
+                <label for="password">Slaptažodis</label>
+                <i class="bi bi-eye-slash toggle-password" id="togglePassword" role="button" tabindex="0" aria-label="Rodyti slaptažodį"></i>
+            </div>
+
+            <div class="form-floating">
+                <input type="password" class="form-control" id="passwordRepeat" name="passwordRepeat" placeholder="Pakartoti slaptažodį" required>
+                <label for="passwordRepeat">Pakartoti slaptažodį</label>
+            </div>
+
+            <button class="btn btn-primary btn-sm" type="button" onclick="location.href='reg_sekminga.html';">Registruotis</button>
+
+            <div class="copy">
+                <hr>
+                <p class="mt-3 mb-3 text-muted"><small>&copy;vydas 2022</small></p>
+            </div>
         </form>
-    </div>
+    </main>
+
     <script>
         const togglePassword = document.querySelector("#togglePassword");
         const password = document.querySelector("#password");
 
-        togglePassword.addEventListener("click", function () {
-           
+        function togglePasswordVisibility() {
             const type = password.getAttribute("type") === "password" ? "text" : "password";
             password.setAttribute("type", type);
+            togglePassword.classList.toggle("bi-eye");
+            togglePassword.classList.toggle("bi-eye-slash");
+            togglePassword.setAttribute("aria-label", type === "password" ? "Rodyti slaptažodį" : "Slėpti slaptažodį");
+        }
 
-            // ikonele
-            this.classList.toggle("bi-eye");
+        togglePassword.addEventListener("click", togglePasswordVisibility);
+        togglePassword.addEventListener("keydown", function (event) {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventEvent();
+                togglePasswordVisibility();
+            }
         });
 
-        // preventas
-        const form = document.querySelector("form");
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
+        document.querySelector("form").addEventListener("submit", function (event) {
+            event.preventDefault();
         });
     </script>
 </body>
-
 </html>
